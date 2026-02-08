@@ -68,5 +68,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation ("io.nerdythings:okhttp-profiler:1.1.1")
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+
 
 }
