@@ -41,7 +41,7 @@ fun PokemonItem(pokemon: Pokemon) {
             text = pokemon.name.replaceFirstChar { it.uppercase() },
             fontSize = 20.sp,
             maxLines = 1,
-            fontWeight = FontWeight.W700, //FontWeight.Medium
+            fontWeight = FontWeight.W700,
             color = Color(0xFFFDFCFC),
             fontFamily = FontFamily.SansSerif
         )

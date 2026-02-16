@@ -13,11 +13,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.oscarpino.common.Params
+import com.oscarpino.domain.usecase.GetAllGenerationNamesUseCase
 
 @HiltViewModel
 class PokemonsViewModel @Inject constructor(
+
     private val getAllPokemonsUseCase: GetAllPokemonsUseCase,
-    private val getPokemonDetailUseCase: GetPokemonDetailUseCase
+    private val getPokemonDetailUseCase: GetPokemonDetailUseCase,
+    private val getAllGenerationNamesUseCase: GetAllGenerationNamesUseCase
+
 ) :
     BaseViewModel<PokemonState, PokemonIntent>() {
 
@@ -36,28 +41,36 @@ class PokemonsViewModel @Inject constructor(
         }
     }
 
-    private fun getAllPokemons(generationId: Int) {
-        viewModelScope.launch {
-            val response =
-                getAllPokemonsUseCase.execute(GetAllPokemonsUseCase.Params(generationId = generationId))
+    public fun getAllPokemons(generationId: Int) {
 
-            when (response.result) {
+        viewModelScope.launch {
+
+            val pokemonResponse =
+                getAllPokemonsUseCase.execute(Params(generationId = generationId))
+
+            val names = getAllGenerationNamesUseCase.getPGenerationNames()
+
+            when (pokemonResponse.result) {
+
                 BaseResult.SUCCESSFUL -> {
-                    response.payload?.let { pokemons ->
-                        _state.update {
-                            it.copy(pokemonList = pokemons)
-                        }
-                    }
-                    _state.value.pokemonList.forEach {
-                        getPokemonDetail(it)
+
+                    val pokemons = pokemonResponse.payload ?: emptyList()
+
+                    _state.update { currentState ->
+                        currentState.copy(
+                            pokemonList = pokemons,
+                            generationNames = names
+                        )
                     }
                 }
-                else -> {
 
+                else -> {
+                    // Manejar error si quieres
                 }
             }
         }
     }
+
 
     private fun getPokemonDetail(pokemon: Pokemon) {
         viewModelScope.launch {

@@ -10,7 +10,8 @@ class NetworkFactory {
 
         fun makeRetrofit(baseUrl:String): Retrofit{
 
-            return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).client(makeHttpClient()).baseUrl(baseUrl).build()
+            return Retrofit.Builder().addConverterFactory(GsonConverterFactory
+                .create()).client(makeHttpClient()).baseUrl(baseUrl).build()
         }
 
         fun makeHttpClient(): OkHttpClient{
