@@ -6,3 +6,8 @@ enum class BaseResult{
     SUCCESSFUL,
     ERROR
 }
+
+sealed interface BaseResponseV2<T>{
+    data class BaseResultSuccessful<T>(val result:T): BaseResponseV2<T>
+    data class BaseError<T>(val error:String): BaseResponseV2<T>
+}

@@ -1,6 +1,5 @@
 package com.oscarpino.api_pokemon.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -51,7 +50,7 @@ fun ApipokemonTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = colorScheme.copy(primary = orange),
         typography = Typography,
         content = content
     )
